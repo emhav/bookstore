@@ -15,22 +15,19 @@ public class BookController {
 	@Autowired
 	private BookRepository repository; 
 	
-	//http://localhost:8080/studentlist
     @RequestMapping(value="/booklist")
     public String bookList(Model model) {	
     	model.addAttribute("books", repository.findAll());
-    	return "booklist"; //booklist.html
+    	return "booklist";
         
     }
-    
-    //palauttaa tyhjän opiskelija-lomakkeen selaimeen
+
     @RequestMapping(value = "/add")
     public String addBook(Model model){
     	model.addAttribute("book", new Book());
         return "addbook";
     }     
     
-    //tallentaa lomakkeella tulleet opiskelijatiedot tietokantaan
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(Book book){
         repository.save(book);
