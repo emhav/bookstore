@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -17,15 +19,20 @@ public class Book {
 	private String isbn;
 	private double price;
 	
+	 @ManyToOne //student ManyToOne department
+	 @JoinColumn(name = "genreid") //viiteavainsarakemääritys DB-taulua varten 
+	 private Genre genre;
+	
 	public Book() {}
 	
-	public Book(String title, String author, int year, String isbn, double price) {
+	public Book(String title, String author, int year, String isbn, double price, Genre genre) {
 		super();
 		this.title = title;
 		this.author = author;
 		this.year = year;
 		this.isbn = isbn;
 		this.price = price;
+		this.genre = genre;
 	}
 	
 	public Long getId() {
@@ -76,9 +83,21 @@ public class Book {
 		this.price = price;
 	}
 	
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+	
 	@Override
+	//älä käytä  Aclipsen autogeneroitua toString metodia > helposti ikuinen loop 
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
+		if (this.genre != null)
+			return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + " department =" + this.getGenre() + "]";		
+		else
+			return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
 	}
 	
 }

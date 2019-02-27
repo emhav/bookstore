@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 
 import hh.swd20.Bookstore.domain.Book;
 import hh.swd20.Bookstore.domain.BookRepository;
+import hh.swd20.Bookstore.domain.Genre;
+import hh.swd20.Bookstore.domain.GenreRepository;
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -19,14 +21,19 @@ public class BookstoreApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner studentDemo(BookRepository repository) {
+	public CommandLineRunner studentDemo(BookRepository brepository, GenreRepository grepository) {
 		return (args) -> {
 			log.info("save a couple of books");
-			repository.save(new Book("Norwegian Wood", "Haruki Murakami", 1987, "9780307744661", 7.60));
-			repository.save(new Book("Homo Deus", "Yuval Noah Harari", 2017, "9781784703936", 10.50));	
+			
+			grepository.save(new Genre("Nonfiction"));
+			grepository.save(new Genre("Fantasy"));
+			grepository.save(new Genre("Crime"));
+			
+			brepository.save(new Book("Norwegian Wood", "Haruki Murakami", 1987, "9780307744661", 7.60, grepository.findByName("Nonfiction").get(0)));
+			brepository.save(new Book("Homo Deus", "Yuval Noah Harari", 2017, "9781784703936", 10.50, grepository.findByName("Fantasy").get(0)));	
 			
 			log.info("fetch all books");
-			for (Book book : repository.findAll()) {
+			for (Book book : brepository.findAll()) {
 				log.info(book.toString());
 			}
 
