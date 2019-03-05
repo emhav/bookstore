@@ -16,8 +16,7 @@ public class Genre {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private Long genreid;
 	private String name;
-	
-	//department OneToMany student
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "genre")
 	private List<Book> books;
 	
@@ -53,8 +52,6 @@ public class Genre {
 	}
 
 	@Override
-	//älä käytä  Aclipsen autogeneroitua toString metodia > helposti ikuinen loop 
-		//huomaa students-attribuutti ei oteta mukaan toString tulostukseen
 	public String toString() {
 		return "Genre [genreid=" + genreid + ", name=" + name + "]";
 	}

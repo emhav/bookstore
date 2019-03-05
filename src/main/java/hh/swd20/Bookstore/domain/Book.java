@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Book {
 	
@@ -19,9 +21,10 @@ public class Book {
 	private String isbn;
 	private double price;
 	
-	 @ManyToOne //student ManyToOne department
-	 @JoinColumn(name = "genreid") //viiteavainsarakemääritys DB-taulua varten 
-	 private Genre genre;
+	@ManyToOne
+	@JsonIgnore
+	@JoinColumn(name = "genreid")
+	private Genre genre;
 	
 	public Book() {}
 	
@@ -92,12 +95,11 @@ public class Book {
 	}
 	
 	@Override
-	//älä käytä  Aclipsen autogeneroitua toString metodia > helposti ikuinen loop 
 	public String toString() {
 		if (this.genre != null)
-			return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + " department =" + this.getGenre() + "]";		
+			return "Book [id=" + id + ",title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + " department =" + this.getGenre() + "]";		
 		else
-			return "Book [title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
+			return "Book [id=" + id + ",title=" + title + ", author=" + author + ", year=" + year + ", isbn=" + isbn + ", price=" + price + "]";
 	}
 	
 }
