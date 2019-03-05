@@ -30,13 +30,13 @@ public class BookController {
         
     }
     
- // RESTful service to get all students
+
     @RequestMapping(value="/books", method = RequestMethod.GET)
     public @ResponseBody List<Book> bookListRest() {	
         return (List<Book>) repository.findAll();
     } 
     
- // RESTful service to get student by id
+
     @RequestMapping(value="/book/{id}", method = RequestMethod.GET)
     public @ResponseBody Optional<Book> findBookRest(@PathVariable("id") Long bookId) {	
     	return repository.findById(bookId);
